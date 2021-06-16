@@ -1,0 +1,44 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <h1>All notes</h1>
+
+    {% for note in notes %}
+        <div class="row col-12 mb-3">
+            <div class="row col-12">
+                <p class="d-block">{{ note.text | escape }}</p>
+            </div>
+            {% if note.share_id %}
+            <div class="row col-12">
+                Share link: <input class="font-italic" value="{{ note.shareLink }}" readonly="readonly" size="80">
+            </div>
+            {% endif %}
+
+            <div class="row col-12 mt-3">
+                {% if note.shared %}
+                    <a class="btn btn-info mr-2" href="/notes/unshare?id={{ note.id }}&back=/notes/list?page={{ page }}">UnShare</a>
+                {% else %}
+                    <a class="btn btn-info mr-2" href="/notes/share?id={{ note.id }}&back=/notes/list?page={{ page }}">Share</a>
+                {% endif %}
+                <a class="btn btn-primary mr-2" href="/notes/edit?id={{ note.id }}">Edit</a>
+                <form action="/notes/delete" method="post" onsubmit="return confirm('Are you sure?')">
+                    <input type="hidden" name="id" value="{{ note.id }}" />
+                    <button type="submit" class="btn btn-danger" >Delete</button>
+                </form>
+            </div>
+        </div>
+        <hr />
+    {% endfor %}
+
+    {% if pageCount > 1 %}
+    <nav aria-label="Pages:">
+        <ul class="pagination">
+            {% for i in 0..pageCount %}
+                <li class="page-item {{ page == i ? 'active' : '' }}"><a class="page-link" href="/notes/list?page={{ i }}">{{ i + 1 }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    <a class="btn btn-primary" href="/notes/add">Add new</a>
+{% endblock %}

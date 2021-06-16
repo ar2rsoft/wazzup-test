@@ -1,0 +1,7 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <h1>View a note of user "{{ user.username }}"</h1>
+
+    <p>{{ note.text | escape }}</p>
+{% endblock %}

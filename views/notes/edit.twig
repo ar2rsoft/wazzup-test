@@ -1,0 +1,25 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <h1>Adding a note</h1>
+
+    <ul>
+        {% if saved %}
+            <li>Note saved</li>
+        {% endif %}
+        {% for error in errors %}
+            <li>{{ error.param }}: {{ error.msg }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="/notes/edit?id={{ note.id }}" method="post">
+        <div class="form-group">
+            <label for="usernameInput">Text</label>
+            <textarea class="form-control" name="text">{{ note.text | escape }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <a class="btn btn-info mt-2" href="/notes/list">Back to list</a>
+{% endblock %}

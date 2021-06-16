@@ -1,0 +1,25 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <h1>Registration</h1>
+
+    <ul>
+        {% for error in errors %}
+            <li>{{ error.param }}: {{ error.msg }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="/users/signup">
+        <div class="form-group">
+            <label for="usernameInput">Username</label>
+            <input type="text" class="form-control " id="usernameInput" name="username" value="{{ username }}">
+        </div>
+
+        <div class="form-group">
+            <label for="passwordInput">Password</label>
+            <input type="password" class="form-control" id="passwordInput" name="password" value="{{ password }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
